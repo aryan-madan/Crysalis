@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #010101;
+    font-family: Georgia, serif;
+    overflow: hidden;
+}
+
+#stage { position: fixed; inset: 0; }
+
+#header {
+    position: fixed;
+    top: 24px;
+    left: 32px;
+    color: #444;
+    font-size: 12px;
+}
+
+#panel {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 280px;
+    background: #111;
+    padding: 28px;
+    display: none;
+}
+
+#close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background:none;
+    border: none;
+    color: #444;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.stat {
+    font-size: 10px;
+    color: #333;
+}
