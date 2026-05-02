@@ -1,10 +1,10 @@
 import * as THREE from "three";
 
 var gems = [
-  { name:"amethyst", latin:"amethystus the third", color:0x9b59b6, desc:"uh uhhh violet colored ig, and in minecraft so thats cool :P", x:-3.8, scale:1.05 },
-  { name:"ruby",     latin:"rubinus (robin hood)", color:0xb03030, desc:"second hardest (after me) :D", x:-1.2, scale:0.9  },
-  { name:"emerald",  latin:"smaragdus (asparagus)", color:0x27ae60, desc:"u trade with villagers for this :O", x:1.2,  scale:1.0  },
-  { name:"sapphire", latin:"caeruleus (bro what)",  color:0x2471a3, desc:"name of a discord bot and like my old username :)", x:3.8,  scale:0.95 }
+  { name:"amethyst", color:0x9b59b6, desc:"uh uhhh violet colored ig, and in minecraft so thats cool :P", x:-3.8, scale:1.05 },
+  { name:"ruby",     color:0xb03030, desc:"second hardest (after diamond) :D", x:-1.2, scale:0.9  },
+  { name:"emerald",  color:0x27ae60, desc:"u trade with villagers for this :O", x:1.2,  scale:1.0  },
+  { name:"sapphire", color:0x2471a3, desc:"name of a discord bot and like my old username :)", x:3.8,  scale:0.95 }
 ];
 
 var bar    = document.getElementById("bar");
@@ -38,7 +38,7 @@ gems.forEach(function(g) {
   glows.push(pt);
 });
 
-var stone = new THREE.TextureLoader().load("public/stone.jpg");
+var stone = new THREE.TextureLoader().load("/stone.jpg");
 stone.wrapS = stone.wrapT = THREE.RepeatWrapping;
 stone.repeat.set(2, 2);
 
@@ -72,9 +72,13 @@ gems.forEach(function(g, i) {
   crystals.push(mesh);
 });
 
+var floorTex = new THREE.TextureLoader().load("/marble.jpg");
+floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping;
+floorTex.repeat.set(6, 6);
+
 var floor = new THREE.Mesh(
   new THREE.PlaneGeometry(30, 30),
-  new THREE.MeshStandardMaterial({ color: 0x0d0d18, roughness: 1 })
+  new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.9 })
 );
 floor.rotation.x = -Math.PI / 2;
 floor.position.y = -1.5;
