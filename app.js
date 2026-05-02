@@ -38,7 +38,7 @@ gems.forEach(function(g) {
   glows.push(pt);
 });
 
-var stone = new THREE.TextureLoader().load("images/stone.jpg");
+var stone = new THREE.TextureLoader().load("public/stone.jpg");
 stone.wrapS = stone.wrapT = THREE.RepeatWrapping;
 stone.repeat.set(2, 2);
 
