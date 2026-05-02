@@ -7,10 +7,10 @@ var gems = [
   { name:"sapphire", latin:"caeruleus (bro what)",  color:0x2471a3, desc:"name of a discord bot and like my old username :)", x:3.8,  scale:0.95 }
 ];
 
-var panel  = document.getElementById("panel");
+var bar    = document.getElementById("bar");
 var elName = document.getElementById("name");
-var elLat  = document.getElementById("latin");
 var elDesc = document.getElementById("desc");
+var hint   = document.getElementById("hint");
 
 var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("stage"), antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -38,7 +38,7 @@ gems.forEach(function(g) {
   glows.push(pt);
 });
 
-var stone = new THREE.TextureLoader().load("stone.jpg");
+var stone = new THREE.TextureLoader().load("images/stone.jpg");
 stone.wrapS = stone.wrapT = THREE.RepeatWrapping;
 stone.repeat.set(2, 2);
 
@@ -80,6 +80,7 @@ floor.rotation.x = -Math.PI / 2;
 floor.position.y = -1.5;
 scene.add(floor);
 
+
 var ray   = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
@@ -89,25 +90,26 @@ window.addEventListener("mousemove", function(e) {
   document.body.style.cursor = ray.intersectObjects(crystals).length ? "pointer" : "";
 });
 
-window.addEventListener("click", function() {
+window.addEventListener("click", function(e) {
+  if (e.target === bar || bar.contains(e.target)) return;
   ray.setFromCamera(mouse, camera);
   var hit = ray.intersectObjects(crystals)[0];
-  if (!hit) return;
-  var g = gems[hit.object.userData.i];
-  elName.textContent = g.name;
-  elLat.textContent  = g.latin;
-  elDesc.textContent = g.desc;
-  panel.style.display = "block";
-  camPos.set(g.x * 0.3, 1.4, 5.8);
-  camLook.set(g.x, 0.38, 0);
-  zoomed = true;
-});
-
-document.getElementById("close").addEventListener("click", function() {
-  panel.style.display = "none";
-  camPos.set(0, 1.5, 10);
-  camLook.set(0, 0, 0);
-  zoomed = false;
+  if (hit) {
+    var g = gems[hit.object.userData.i];
+    elName.textContent = g.name;
+    elDesc.textContent = g.desc;
+    bar.classList.add("open");
+    hint.style.opacity = "0";
+    camPos.set(g.x * 0.3, 1.4, 5.8);
+    camLook.set(g.x, 0.38, 0);
+    zoomed = true;
+  } else {
+    bar.classList.remove("open");
+    hint.style.opacity = "1";
+    camPos.set(0, 1.5, 10);
+    camLook.set(0, 0, 0);
+    zoomed = false;
+  }
 });
 
 window.addEventListener("resize", function() {
